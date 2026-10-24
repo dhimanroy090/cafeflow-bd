@@ -13,7 +13,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { DEMO_RESTAURANT } from "@/features/menu/demo-menu-data";
-import type { DashboardOrderWithItems } from "@/app/api/v1/dashboard/orders/route";
+import type { DashboardOrderWithItems } from "@/lib/orders/memory-store";
 
 export type ThermalPrintMode = "kot" | "bill";
 export type ThermalRollSize = "58mm" | "80mm";

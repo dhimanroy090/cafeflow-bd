@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { soundManager } from "@/lib/audio-alerts";
-import type { DashboardOrderWithItems } from "@/app/api/v1/dashboard/orders/route";
+import type { DashboardOrderWithItems } from "@/lib/orders/memory-store";
 import type { OrderStatus, PaymentStatus } from "@/lib/supabase/database.types";
 import { toast } from "sonner";
 

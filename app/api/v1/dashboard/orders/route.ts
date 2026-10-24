@@ -1,6 +1,10 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createAdminClient } from "@/lib/supabase/server";
 import { DEMO_RESTAURANT } from "@/features/menu/demo-menu-data";
+import {
+  memoryDashboardOrders,
+  type DashboardOrderWithItems,
+} from "@/lib/orders/memory-store";
 import type {
   OrderItemRow,
   OrderStatus,
@@ -10,12 +14,6 @@ import type {
 } from "@/lib/supabase/database.types";
 
 export const dynamic = "force-dynamic";
-import {
-  memoryDashboardOrders,
-  type DashboardOrderWithItems,
-} from "@/lib/orders/memory-store";
-
-export type { DashboardOrderWithItems };
 
 
 export async function GET(request: NextRequest) {

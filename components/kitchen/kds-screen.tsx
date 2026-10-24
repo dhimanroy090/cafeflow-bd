@@ -28,7 +28,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useLiveOrders } from "@/features/orders/use-live-orders";
 import { DEMO_RESTAURANT } from "@/features/menu/demo-menu-data";
 import { toast } from "sonner";
-import type { DashboardOrderWithItems } from "@/app/api/v1/dashboard/orders/route";
+import type { DashboardOrderWithItems } from "@/lib/orders/memory-store";
 
 function getElapsedMinutes(createdAt: string): number {
   const diffMs = Date.now() - new Date(createdAt).getTime();

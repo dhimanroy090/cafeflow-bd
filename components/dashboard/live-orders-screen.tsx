@@ -33,7 +33,7 @@ import {
 import { useLiveOrders } from "@/features/orders/use-live-orders";
 import { DEMO_RESTAURANT } from "@/features/menu/demo-menu-data";
 import { formatBDT } from "@/lib/utils";
-import type { DashboardOrderWithItems } from "@/app/api/v1/dashboard/orders/route";
+import type { DashboardOrderWithItems } from "@/lib/orders/memory-store";
 import { SettlePaymentDialog } from "./settle-payment-dialog";
 import {
   ThermalPrintDialog,

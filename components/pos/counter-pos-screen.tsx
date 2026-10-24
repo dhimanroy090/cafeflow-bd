@@ -40,7 +40,7 @@ import {
   ThermalPrintDialog,
   type ThermalPrintMode,
 } from "@/components/pos/thermal-receipt";
-import type { DashboardOrderWithItems } from "@/app/api/v1/dashboard/orders/route";
+import type { DashboardOrderWithItems } from "@/lib/orders/memory-store";
 import type {
   OrderType,
   ItemVariantRow,
