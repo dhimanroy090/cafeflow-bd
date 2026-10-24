@@ -66,12 +66,12 @@ function QRMenuInner({
       {/* Top Banner / Restaurant Info Header */}
       <header className="border-b border-border/80 bg-brand-cream/90 backdrop-blur-md sticky top-0 z-30">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5 min-w-0">
+          <div className="flex items-center gap-2.5 min-w-0 flex-1">
             <div className="w-10 h-10 rounded-[10px] bg-brand-forest text-brand-cream flex items-center justify-center shrink-0 shadow-sm">
               <Coffee className="w-5 h-5 text-brand-terracotta" />
             </div>
-            <div className="min-w-0">
-              <h1 className="font-extrabold text-base sm:text-lg text-brand-forest truncate leading-tight">
+            <div className="min-w-0 flex-1">
+              <h1 className="font-extrabold text-sm sm:text-lg text-brand-forest truncate leading-tight">
                 {restaurant.name}
               </h1>
               <p className="text-[11px] text-muted-foreground truncate flex items-center gap-1">
@@ -84,17 +84,18 @@ function QRMenuInner({
           {/* Table / Ordering Status Badge */}
           <div className="shrink-0 text-right">
             {table ? (
-              <Badge variant="accent" className="font-semibold text-xs py-1 px-2.5 shadow-sm">
-                Ordering for {table.table_label}
+              <Badge variant="accent" className="font-bold text-xs py-1 px-2.5 shadow-sm whitespace-nowrap shrink-0">
+                <span className="sm:hidden">{table.table_label}</span>
+                <span className="hidden sm:inline">Ordering for {table.table_label}</span>
               </Badge>
             ) : isViewOnly ? (
-              <Badge variant="outline" className="font-medium text-xs py-1 px-2.5 gap-1 bg-background/50">
+              <Badge variant="outline" className="font-medium text-xs py-1 px-2.5 gap-1 bg-background/50 whitespace-nowrap shrink-0">
                 <Eye className="w-3 h-3 text-muted-foreground" />
-                View-Only Menu
+                View-Only
               </Badge>
             ) : (
-              <Badge variant="secondary" className="font-semibold text-xs py-1 px-2.5">
-                Takeaway Order
+              <Badge variant="secondary" className="font-semibold text-xs py-1 px-2.5 whitespace-nowrap shrink-0">
+                Takeaway
               </Badge>
             )}
           </div>
@@ -214,14 +215,14 @@ function QRMenuInner({
               >
                 <CardContent className="p-4 flex items-start justify-between gap-4">
                   <div className="space-y-1.5 min-w-0 flex-1">
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-wrap items-baseline gap-1.5">
                       <h3 className="font-extrabold text-base text-brand-forest group-hover:text-brand-terracotta transition-colors leading-tight">
                         {item.name}
                       </h3>
                       {item.variants.length > 0 && (
-                        <Badge variant="outline" className="text-[10px] px-1.5 py-0 border-border text-muted-foreground font-mono">
+                        <span className="inline-flex items-center text-[10px] font-mono font-medium px-2 py-0.5 rounded-full border border-border/80 bg-secondary/50 text-muted-foreground whitespace-nowrap shrink-0">
                           {item.variants.length} Sizes
-                        </Badge>
+                        </span>
                       )}
                     </div>
 
