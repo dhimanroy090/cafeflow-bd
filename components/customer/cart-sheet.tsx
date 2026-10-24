@@ -137,7 +137,7 @@ export function CartSheet({
         className="w-full sm:max-w-md p-0 flex flex-col bg-card text-card-foreground shadow-2xl border-l border-border rounded-l-[18px]"
       >
         {/* Header */}
-        <SheetHeader className="p-5 border-b border-border/80 text-left space-y-1">
+        <SheetHeader className="p-5 pr-12 border-b border-border/80 text-left space-y-1">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <ShoppingBag className="w-5 h-5 text-brand-forest" />

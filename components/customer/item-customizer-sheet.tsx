@@ -93,25 +93,23 @@ export function ItemCustomizerSheet({
         </div>
 
         <div className="px-6 pb-28 pt-2 space-y-6">
-          {/* Item Header */}
-          <SheetHeader className="text-left space-y-1.5">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <SheetTitle className="text-xl sm:text-2xl font-extrabold text-brand-forest">
-                  {item.name}
-                </SheetTitle>
-                {item.nameBengali && (
-                  <p className="font-bengali text-sm text-brand-charcoal/80 font-medium">
-                    {item.nameBengali}
-                  </p>
-                )}
-              </div>
-              <Badge variant="accent" className="text-sm px-2.5 py-1 shrink-0 font-bold">
+          {/* Item Header (with pr-12 to guarantee safe margin for close button) */}
+          <SheetHeader className="text-left space-y-2 pr-12">
+            <div className="flex flex-wrap items-baseline justify-between gap-2.5">
+              <SheetTitle className="text-xl sm:text-2xl font-extrabold text-brand-forest leading-tight">
+                {item.name}
+              </SheetTitle>
+              <Badge variant="accent" className="text-sm px-2.5 py-0.5 font-bold font-mono shrink-0 shadow-sm">
                 {formatBDT(item.base_price)}
               </Badge>
             </div>
+            {item.nameBengali && (
+              <p className="font-bengali text-xs sm:text-sm text-brand-charcoal/80 font-medium">
+                {item.nameBengali}
+              </p>
+            )}
             {item.description && (
-              <SheetDescription className="text-xs sm:text-sm text-muted-foreground leading-relaxed pt-1">
+              <SheetDescription className="text-xs sm:text-sm text-muted-foreground leading-relaxed pt-0.5">
                 {item.description}
               </SheetDescription>
             )}
