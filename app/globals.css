@@ -1,0 +1,160 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Brand Design Tokens */
+    --brand-forest: #173F35;
+    --brand-cream: #F6F2E9;
+    --brand-terracotta: #D98651;
+    --brand-charcoal: #27332E;
+
+    /* Semantic UI Tokens (HSL) */
+    /* Background = Cream (#F6F2E9) */
+    --background: 42 39% 94%;
+    /* Foreground = Charcoal (#27332E) */
+    --foreground: 155 13% 18%;
+
+    /* Primary = Forest (#173F35) */
+    --primary: 165 47% 17%;
+    --primary-foreground: 42 39% 94%;
+
+    /* Secondary = Soft Forest Green / Sage tint */
+    --secondary: 160 22% 88%;
+    --secondary-foreground: 165 47% 17%;
+
+    /* Accent = Terracotta (#D98651) */
+    --accent: 23 64% 58%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Surface / Card Tokens */
+    --card: 0 0% 100%;
+    --card-foreground: 155 13% 18%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 155 13% 18%;
+
+    --muted: 42 20% 89%;
+    --muted-foreground: 155 10% 40%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 42 20% 84%;
+    --input: 42 20% 84%;
+    --ring: 165 47% 17%;
+
+    /* Strict Border Radius Standards */
+    --radius-input: 10px;
+    --radius-card: 14px;
+    --radius-modal: 18px;
+    --radius: 14px;
+  }
+
+  .dark {
+    --background: 155 25% 10%;
+    --foreground: 42 30% 94%;
+
+    --primary: 160 38% 35%;
+    --primary-foreground: 42 39% 94%;
+
+    --secondary: 155 20% 20%;
+    --secondary-foreground: 42 30% 94%;
+
+    --accent: 23 64% 58%;
+    --accent-foreground: 0 0% 100%;
+
+    --card: 155 22% 14%;
+    --card-foreground: 42 30% 94%;
+
+    --popover: 155 22% 14%;
+    --popover-foreground: 42 30% 94%;
+
+    --muted: 155 18% 22%;
+    --muted-foreground: 42 15% 65%;
+
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 155 18% 22%;
+    --input: 155 18% 25%;
+    --ring: 160 38% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Custom Radius Utilities */
+.rounded-input {
+  border-radius: var(--radius-input);
+}
+.rounded-card {
+  border-radius: var(--radius-card);
+}
+.rounded-modal {
+  border-radius: var(--radius-modal);
+}
+
+/* ==========================================================================
+   Thermal POS Roll Printing Optimization (58mm & 80mm)
+   High-contrast, zero-margins, monospace, auto-height
+   ========================================================================== */
+@media print {
+  @page {
+    margin: 0;
+    size: auto;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Hide everything except the thermal receipt container */
+  body * {
+    visibility: hidden;
+  }
+
+  #thermal-print-container,
+  #thermal-print-container * {
+    visibility: visible;
+  }
+
+  #thermal-print-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 0 !important;
+    padding: 4mm !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-family: 'Courier New', Courier, monospace, 'Hind Siliguri', sans-serif !important;
+    font-size: 11px !important;
+    line-height: 1.25 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #thermal-print-container.roll-58mm {
+    width: 48mm !important;
+    max-width: 48mm !important;
+    font-size: 10px !important;
+  }
+
+  #thermal-print-container.roll-80mm {
+    width: 72mm !important;
+    max-width: 72mm !important;
+    font-size: 12px !important;
+  }
+}
