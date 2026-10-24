@@ -1,5 +1,7 @@
+import Link from "next/link";
 import { env } from "@/lib/env";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { SystemShowcase } from "./components/system-showcase";
 import {
@@ -9,6 +11,10 @@ import {
   KeyRound,
   ShieldCheck,
   Globe2,
+  QrCode,
+  Utensils,
+  ArrowRight,
+  LayoutDashboard,
 } from "lucide-react";
 
 export default function MarketingLandingPage() {
@@ -16,8 +22,8 @@ export default function MarketingLandingPage() {
     <div className="min-h-screen bg-brand-cream text-brand-charcoal selection:bg-brand-terracotta selection:text-white">
       {/* Top Brand Navigation Bar */}
       <header className="border-b border-border/80 bg-brand-cream/80 backdrop-blur-md sticky top-0 z-40">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2.5 sm:gap-3">
             <div className="w-10 h-10 rounded-[10px] bg-brand-forest text-brand-cream flex items-center justify-center shadow-md">
               <UtensilsCrossed className="w-5 h-5 text-brand-terracotta" />
             </div>
@@ -26,39 +32,61 @@ export default function MarketingLandingPage() {
                 CaféFlow BD
               </span>
               <span className="text-[10px] text-muted-foreground font-mono tracking-widest uppercase">
-                Phase 0 • Foundation Ready
+                Restaurant OS
               </span>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
-            <Badge variant="outline" className="hidden sm:inline-flex gap-1.5 py-1 px-3 border-emerald-700/30 text-emerald-800 bg-emerald-50">
-              <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
-              TypeScript Strict Mode
-            </Badge>
-            <Badge variant="default" className="py-1 px-3">
-              v0.1.0-alpha
-            </Badge>
+            <Button asChild size="sm" className="bg-brand-forest text-brand-cream font-bold text-xs h-9">
+              <Link href="/dashboard">
+                <LayoutDashboard className="w-3.5 h-3.5 mr-1.5" />
+                Staff Dashboard
+              </Link>
+            </Button>
           </div>
         </div>
       </header>
 
       {/* Main Content Container */}
-      <main className="max-w-6xl mx-auto px-6 py-12 space-y-12">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-10 sm:space-y-12">
         {/* Hero Section */}
-        <div className="space-y-4 max-w-3xl">
+        <div className="space-y-5 max-w-3xl">
           <Badge variant="accent" className="text-xs px-3 py-1 font-semibold">
             Bangladesh Restaurant Operating System & POS
           </Badge>
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-brand-forest tracking-tight leading-[1.15]">
+          <h1 className="text-3xl sm:text-5xl font-extrabold text-brand-forest tracking-tight leading-[1.15]">
             Engineering a High-Performance QR Ordering & Cloud POS Foundation
           </h1>
           <p className="font-bengali text-lg sm:text-xl text-brand-charcoal/90 leading-relaxed">
             ক্যাফে ও রেস্তোরাঁর জন্য আধুনিক, নির্ভরযোগ্য এবং মাল্টি-টেন্যান্ট কিউআর টেবিল অর্ডারিং সিস্টেম।
           </p>
           <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-            Phase 0 deliverables verified: modular directory structure, strict Zod environment validation, isolated Supabase SSR client utilities, brand design tokens, and essential shadcn/ui components.
+            Scan dine-in table QR codes, dispatch orders directly to barista kitchen screens, and manage cashier billing with instant bKash, cash, and card settlement.
           </p>
+
+          {/* Interactive Live Demo Launchers */}
+          <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <Button asChild size="lg" className="bg-brand-forest hover:bg-brand-forest-light text-brand-cream font-bold text-sm shadow-lg gap-2">
+              <Link href="/r/artisancoffee-dhk?t=table-04-token">
+                <QrCode className="w-4 h-4 text-brand-terracotta" />
+                Test Customer QR Menu (Table 04)
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </Button>
+            <Button asChild variant="outline" size="lg" className="border-brand-forest/40 text-brand-forest hover:bg-secondary font-bold text-sm gap-2">
+              <Link href="/dashboard/pos">
+                <Utensils className="w-4 h-4 text-brand-terracotta" />
+                Quick Counter POS
+              </Link>
+            </Button>
+            <Button asChild variant="ghost" size="lg" className="text-brand-forest font-bold text-sm gap-2">
+              <Link href="/dashboard/tables">
+                <QrCode className="w-4 h-4" />
+                Table QR Stands
+              </Link>
+            </Button>
+          </div>
         </div>
 
         {/* System Readiness Verification Grid */}

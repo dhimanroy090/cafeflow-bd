@@ -11,6 +11,7 @@ import {
   Utensils,
   Receipt,
   ArrowLeft,
+  ArrowRight,
   ChefHat,
   Tag,
   Coffee,
@@ -63,6 +64,7 @@ export function CounterPOSScreen() {
   // Category & search state
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [mobileView, setMobileView] = useState<"menu" | "ticket">("menu");
 
   // Cart & Order Configuration
   const [cart, setCart] = useState<CartLineItem[]>([]);
@@ -413,11 +415,49 @@ export function CounterPOSScreen() {
           </Link>
         </div>
       </header>
+      {/* Mobile Station Switcher (< lg) */}
+      <div className="lg:hidden bg-card border-b border-border p-2.5 px-4 flex items-center justify-between gap-2 shrink-0">
+        <div className="grid grid-cols-2 gap-2 flex-1">
+          <Button
+            type="button"
+            variant={mobileView === "menu" ? "default" : "outline"}
+            size="sm"
+            onClick={() => setMobileView("menu")}
+            className={`text-xs font-bold gap-1.5 h-9 ${
+              mobileView === "menu" ? "bg-brand-forest text-brand-cream" : ""
+            }`}
+          >
+            <Utensils className="w-3.5 h-3.5" />
+            Menu Catalog
+          </Button>
+          <Button
+            type="button"
+            variant={mobileView === "ticket" ? "default" : "outline"}
+            size="sm"
+            onClick={() => setMobileView("ticket")}
+            className={`text-xs font-bold gap-1.5 h-9 relative ${
+              mobileView === "ticket" ? "bg-brand-forest text-brand-cream" : ""
+            }`}
+          >
+            <ShoppingCart className="w-3.5 h-3.5" />
+            Ticket
+            {cart.length > 0 && (
+              <Badge variant="accent" className="ml-1 text-[10px] py-0 px-1.5 font-bold">
+                {cart.reduce((s, i) => s + i.quantity, 0)}
+              </Badge>
+            )}
+          </Button>
+        </div>
+      </div>
 
       {/* Main Split Layout */}
-      <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
+      <div className="flex-1 flex flex-col lg:flex-row overflow-hidden relative">
         {/* Left Side (60%): Menu Catalog & Quick Picker */}
-        <section className="flex-1 flex flex-col p-4 sm:p-5 overflow-y-auto max-h-[calc(100vh-60px)]">
+        <section
+          className={`flex-1 flex flex-col p-4 sm:p-5 overflow-y-auto max-h-[calc(100vh-60px)] pb-24 lg:pb-5 ${
+            mobileView === "ticket" ? "hidden lg:flex" : "flex"
+          }`}
+        >
           {/* Search & Category Pills */}
           <div className="space-y-3 mb-4">
             <div className="relative">
@@ -521,10 +561,57 @@ export function CounterPOSScreen() {
               </Button>
             </div>
           )}
+
+          {/* Mobile Floating Cart Bar */}
+          {cart.length > 0 && mobileView === "menu" && (
+            <div className="lg:hidden fixed bottom-4 inset-x-4 z-40 max-w-md mx-auto animate-in slide-in-from-bottom duration-200">
+              <button
+                type="button"
+                onClick={() => setMobileView("ticket")}
+                className="w-full bg-brand-forest text-brand-cream hover:bg-brand-forest-light transition-all p-3.5 rounded-[14px] shadow-2xl flex items-center justify-between border border-brand-cream/20"
+              >
+                <div className="flex items-center gap-2.5">
+                  <div className="w-7 h-7 rounded-full bg-brand-terracotta text-white font-extrabold text-xs flex items-center justify-center shadow-sm">
+                    {cart.reduce((s, i) => s + i.quantity, 0)}
+                  </div>
+                  <div className="text-left">
+                    <span className="text-[11px] opacity-80 block leading-tight">Ticket Total</span>
+                    <span className="text-sm font-extrabold font-mono">
+                      {formatBDT(grandTotal)}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1 text-xs font-bold bg-white/10 px-3 py-1.5 rounded-[8px]">
+                  <span>Review Ticket</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </div>
+              </button>
+            </div>
+          )}
         </section>
 
         {/* Right Side (40%): Current Bill & POS Cart */}
-        <aside className="w-full lg:w-[420px] bg-card border-l border-border flex flex-col shadow-lg z-30">
+        <aside
+          className={`w-full lg:w-[420px] bg-card border-l border-border flex flex-col shadow-lg z-30 ${
+            mobileView === "menu" ? "hidden lg:flex" : "flex"
+          }`}
+        >
+          {/* Mobile Back to Catalog Bar */}
+          <div className="lg:hidden p-2.5 px-4 bg-muted/40 border-b border-border flex items-center justify-between">
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={() => setMobileView("menu")}
+              className="text-xs font-bold gap-1.5 text-brand-forest hover:bg-brand-forest/10 h-8 px-2"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              Add More Items
+            </Button>
+            <span className="text-xs font-mono font-bold text-muted-foreground">
+              {cart.reduce((s, i) => s + i.quantity, 0)} items in ticket
+            </span>
+          </div>
           {/* Order Header / Order Type Selector */}
           <div className="p-4 border-b border-border space-y-3 bg-secondary/15">
             <div className="flex items-center justify-between">

@@ -237,6 +237,7 @@ export function KDSScreen() {
 
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isSimulating, setIsSimulating] = useState(false);
+  const [mobileColumn, setMobileColumn] = useState<"all" | "new" | "preparing" | "ready">("all");
 
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
@@ -300,23 +301,23 @@ export function KDSScreen() {
       )}
 
       {/* KDS Header Bar */}
-      <header className="border-b border-border/80 bg-brand-cream/90 backdrop-blur-md px-6 py-3 flex items-center justify-between gap-4 sticky top-0 z-40">
-        <div className="flex items-center gap-3">
+      <header className="border-b border-border/80 bg-brand-cream/90 backdrop-blur-md px-4 sm:px-6 py-3 flex items-center justify-between gap-3 sticky top-0 z-40">
+        <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
           <Link
             href="/dashboard"
-            className="w-9 h-9 rounded-[10px] bg-card border border-border flex items-center justify-center text-brand-forest hover:bg-secondary/40 transition-colors"
+            className="w-9 h-9 rounded-[10px] bg-card border border-border flex items-center justify-center text-brand-forest hover:bg-secondary/40 transition-colors shrink-0"
           >
             <ArrowLeft className="w-4 h-4" />
           </Link>
-          <div className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-[10px] bg-brand-forest text-brand-cream flex items-center justify-center">
+          <div className="flex items-center gap-2 min-w-0">
+            <div className="w-9 h-9 rounded-[10px] bg-brand-forest text-brand-cream flex items-center justify-center shrink-0">
               <ChefHat className="w-5 h-5 text-brand-terracotta" />
             </div>
-            <div>
-              <h1 className="font-extrabold text-base sm:text-lg text-brand-forest leading-tight">
-                Kitchen Display System (KDS)
+            <div className="min-w-0">
+              <h1 className="font-extrabold text-sm sm:text-lg text-brand-forest leading-tight truncate">
+                Kitchen Display (KDS)
               </h1>
-              <p className="text-[11px] text-muted-foreground font-mono">
+              <p className="text-[11px] text-muted-foreground font-mono truncate">
                 {DEMO_RESTAURANT.name} • Live Screen
               </p>
             </div>
@@ -324,18 +325,18 @@ export function KDSScreen() {
         </div>
 
         {/* Status Indicators & Action Controls */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
           {/* Bangladesh Network Resilience Connection Badge */}
           {connectionStatus === "connected" ? (
-            <Badge variant="outline" className="gap-1.5 py-1 px-2.5 border-emerald-600/30 text-emerald-800 bg-emerald-50 text-xs">
+            <Badge variant="outline" className="gap-1.5 py-1 px-2 sm:px-2.5 border-emerald-600/30 text-emerald-800 bg-emerald-50 text-xs">
               <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
               <Wifi className="w-3.5 h-3.5" />
-              Live Connected
+              <span className="hidden sm:inline">Live Connected</span>
             </Badge>
           ) : (
-            <Badge variant="destructive" className="gap-1.5 py-1 px-2.5 text-xs animate-pulse">
+            <Badge variant="destructive" className="gap-1.5 py-1 px-2 sm:px-2.5 text-xs animate-pulse">
               <WifiOff className="w-3.5 h-3.5" />
-              Reconnecting (25s Polling Active)...
+              <span className="hidden sm:inline">Reconnecting (25s Polling Active)...</span>
             </Badge>
           )}
 
@@ -345,7 +346,7 @@ export function KDSScreen() {
             variant="outline"
             size="sm"
             onClick={unlockAudio}
-            className={`gap-1.5 text-xs h-9 ${
+            className={`gap-1.5 text-xs h-9 px-2.5 ${
               isAudioUnlocked
                 ? "border-emerald-600/40 text-emerald-800 bg-emerald-50/50"
                 : "border-amber-500/50 text-amber-900 bg-amber-50"
@@ -353,11 +354,13 @@ export function KDSScreen() {
           >
             {isAudioUnlocked ? (
               <>
-                <Volume2 className="w-3.5 h-3.5 text-emerald-700" /> Sound On
+                <Volume2 className="w-3.5 h-3.5 text-emerald-700" />
+                <span className="hidden sm:inline">Sound On</span>
               </>
             ) : (
               <>
-                <VolumeX className="w-3.5 h-3.5 text-amber-700" /> Sound Muted
+                <VolumeX className="w-3.5 h-3.5 text-amber-700" />
+                <span className="hidden sm:inline">Sound Muted</span>
               </>
             )}
           </Button>
@@ -401,10 +404,62 @@ export function KDSScreen() {
         </div>
       </header>
 
+      {/* Mobile Station Queue Filter Tabs (< md) */}
+      <div className="md:hidden bg-card border-b border-border p-2 px-4 flex items-center gap-1.5 overflow-x-auto no-scrollbar shrink-0">
+        <Button
+          type="button"
+          variant={mobileColumn === "all" ? "default" : "outline"}
+          size="sm"
+          onClick={() => setMobileColumn("all")}
+          className={`text-xs font-bold h-8 shrink-0 rounded-full ${
+            mobileColumn === "all" ? "bg-brand-forest text-brand-cream" : ""
+          }`}
+        >
+          All ({orders.length})
+        </Button>
+        <Button
+          type="button"
+          variant={mobileColumn === "new" ? "default" : "outline"}
+          size="sm"
+          onClick={() => setMobileColumn("new")}
+          className={`text-xs font-bold h-8 shrink-0 rounded-full ${
+            mobileColumn === "new" ? "bg-brand-forest text-brand-cream" : ""
+          }`}
+        >
+          New ({newOrders.length})
+        </Button>
+        <Button
+          type="button"
+          variant={mobileColumn === "preparing" ? "default" : "outline"}
+          size="sm"
+          onClick={() => setMobileColumn("preparing")}
+          className={`text-xs font-bold h-8 shrink-0 rounded-full ${
+            mobileColumn === "preparing" ? "bg-brand-terracotta text-white" : "text-brand-terracotta"
+          }`}
+        >
+          Preparing ({preparingOrders.length})
+        </Button>
+        <Button
+          type="button"
+          variant={mobileColumn === "ready" ? "default" : "outline"}
+          size="sm"
+          onClick={() => setMobileColumn("ready")}
+          className={`text-xs font-bold h-8 shrink-0 rounded-full ${
+            mobileColumn === "ready" ? "bg-emerald-700 text-white" : "text-emerald-700"
+          }`}
+        >
+          Ready ({readyOrders.length})
+        </Button>
+      </div>
+
       {/* 3-Column KDS Layout */}
-      <div className="flex-1 p-6 grid grid-cols-1 md:grid-cols-3 gap-6 overflow-x-auto">
+      <div className="flex-1 p-4 sm:p-6 grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 overflow-x-auto">
         {/* Column 1: New / Accepted */}
-        <section className="flex flex-col space-y-3">
+        <section
+          className={`flex flex-col space-y-3 ${
+            mobileColumn !== "all" && mobileColumn !== "new" ? "hidden md:flex" : "flex"
+          }`}
+        >
           <div className="p-3 rounded-[12px] bg-secondary/50 border border-border flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="w-3 h-3 rounded-full bg-brand-forest" />
@@ -438,7 +493,11 @@ export function KDSScreen() {
         </section>
 
         {/* Column 2: Preparing */}
-        <section className="flex flex-col space-y-3">
+        <section
+          className={`flex flex-col space-y-3 ${
+            mobileColumn !== "all" && mobileColumn !== "preparing" ? "hidden md:flex" : "flex"
+          }`}
+        >
           <div className="p-3 rounded-[12px] bg-brand-terracotta/10 border border-brand-terracotta/30 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Flame className="w-4 h-4 text-brand-terracotta animate-pulse" />
@@ -472,7 +531,11 @@ export function KDSScreen() {
         </section>
 
         {/* Column 3: Ready for Pickup / Table Service */}
-        <section className="flex flex-col space-y-3">
+        <section
+          className={`flex flex-col space-y-3 ${
+            mobileColumn !== "all" && mobileColumn !== "ready" ? "hidden md:flex" : "flex"
+          }`}
+        >
           <div className="p-3 rounded-[12px] bg-emerald-50 border border-emerald-600/30 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-emerald-700" />

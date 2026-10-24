@@ -155,23 +155,23 @@ export function LiveOrdersScreen() {
       )}
 
       {/* Main Header Bar */}
-      <header className="border-b border-border/80 bg-brand-cream/90 backdrop-blur-md px-6 py-4 flex items-center justify-between gap-4 sticky top-0 z-40">
-        <div className="flex items-center gap-3">
+      <header className="border-b border-border/80 bg-brand-cream/90 backdrop-blur-md px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between gap-3 sticky top-0 z-40">
+        <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
           <Link
             href="/dashboard"
-            className="w-9 h-9 rounded-[10px] bg-card border border-border flex items-center justify-center text-brand-forest hover:bg-secondary/40 transition-colors"
+            className="w-9 h-9 rounded-[10px] bg-card border border-border flex items-center justify-center text-brand-forest hover:bg-secondary/40 transition-colors shrink-0"
           >
             <ArrowLeft className="w-4 h-4" />
           </Link>
-          <div className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-[10px] bg-brand-forest text-brand-cream flex items-center justify-center">
+          <div className="flex items-center gap-2 min-w-0">
+            <div className="w-9 h-9 rounded-[10px] bg-brand-forest text-brand-cream flex items-center justify-center shrink-0">
               <Receipt className="w-5 h-5 text-brand-terracotta" />
             </div>
-            <div>
-              <h1 className="font-extrabold text-base sm:text-lg text-brand-forest leading-tight">
-                Cashier & POS Live Orders
+            <div className="min-w-0">
+              <h1 className="font-extrabold text-sm sm:text-lg text-brand-forest leading-tight truncate">
+                Cashier & POS Orders
               </h1>
-              <p className="text-[11px] text-muted-foreground font-mono">
+              <p className="text-[11px] text-muted-foreground font-mono truncate">
                 {DEMO_RESTAURANT.name} • Active Tab Queue
               </p>
             </div>
@@ -179,17 +179,17 @@ export function LiveOrdersScreen() {
         </div>
 
         {/* Connectivity, Sound & Quick Actions */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
           {connectionStatus === "connected" ? (
-            <Badge variant="outline" className="gap-1.5 py-1 px-2.5 border-emerald-600/30 text-emerald-800 bg-emerald-50 text-xs">
+            <Badge variant="outline" className="gap-1.5 py-1 px-2 sm:px-2.5 border-emerald-600/30 text-emerald-800 bg-emerald-50 text-xs">
               <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
               <Wifi className="w-3.5 h-3.5" />
-              Live Connected
+              <span className="hidden sm:inline">Live Connected</span>
             </Badge>
           ) : (
-            <Badge variant="destructive" className="gap-1.5 py-1 px-2.5 text-xs animate-pulse">
+            <Badge variant="destructive" className="gap-1.5 py-1 px-2 sm:px-2.5 text-xs animate-pulse">
               <WifiOff className="w-3.5 h-3.5" />
-              Reconnecting (25s Polling Fallback)...
+              <span className="hidden sm:inline">Reconnecting...</span>
             </Badge>
           )}
 
@@ -198,36 +198,38 @@ export function LiveOrdersScreen() {
             variant="outline"
             size="sm"
             onClick={unlockAudio}
-            className={`gap-1.5 text-xs h-9 ${
+            className={`gap-1.5 text-xs h-9 px-2.5 ${
               isAudioUnlocked
                 ? "border-emerald-600/40 text-emerald-800 bg-emerald-50/50"
                 : "border-amber-500/50 text-amber-900 bg-amber-50"
             }`}
           >
             {isAudioUnlocked ? <Volume2 className="w-3.5 h-3.5 text-emerald-700" /> : <VolumeX className="w-3.5 h-3.5 text-amber-700" />}
-            {isAudioUnlocked ? "Sound Active" : "Enable Sound"}
+            <span className="hidden sm:inline">{isAudioUnlocked ? "Sound Active" : "Enable Sound"}</span>
           </Button>
 
-          <Button asChild variant="outline" size="sm" className="h-9 gap-1.5 border-brand-forest/30 text-brand-forest hover:bg-brand-forest/10 font-bold">
+          <Button asChild variant="outline" size="sm" className="h-9 gap-1.5 border-brand-forest/30 text-brand-forest hover:bg-brand-forest/10 font-bold hidden md:inline-flex">
             <Link href="/dashboard/pos">
               <Utensils className="w-3.5 h-3.5 text-brand-terracotta" />
               Counter POS
             </Link>
           </Button>
 
-          <Button asChild variant="default" size="sm" className="h-9 gap-1.5 bg-brand-forest">
+          <Button asChild variant="default" size="sm" className="h-9 gap-1.5 bg-brand-forest px-3">
             <Link href="/dashboard/kitchen">
-              Open KDS Screen <ChevronRight className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Open KDS</span>
+              <span className="sm:hidden">KDS</span>
+              <ChevronRight className="w-3.5 h-3.5" />
             </Link>
           </Button>
         </div>
       </header>
 
       {/* Main Content Area */}
-      <main className="flex-1 p-6 max-w-7xl mx-auto w-full space-y-6">
+      <main className="flex-1 p-4 sm:p-6 max-w-7xl mx-auto w-full space-y-4 sm:space-y-6">
         {/* Filter Controls Bar */}
-        <div className="p-4 rounded-[14px] bg-card border border-border shadow-sm space-y-4">
-          <div className="flex flex-col sm:flex-row items-center gap-3 justify-between">
+        <div className="p-3.5 sm:p-4 rounded-[14px] bg-card border border-border shadow-sm space-y-3 sm:space-y-4">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 justify-between">
             {/* Search Input */}
             <div className="relative w-full sm:w-80">
               <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
@@ -240,7 +242,7 @@ export function LiveOrdersScreen() {
             </div>
 
             {/* Quick Status Tabs */}
-            <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto">
+            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar w-full sm:w-auto">
               {[
                 { id: "all", label: "All Active" },
                 { id: "pending", label: "Pending Verification" },

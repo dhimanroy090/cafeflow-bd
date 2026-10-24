@@ -22,7 +22,7 @@ export default function DashboardPage() {
   const isSuspended = DEMO_RESTAURANT.subscription_status === "suspended";
 
   return (
-    <div className="min-h-screen p-6 md:p-12 max-w-5xl mx-auto flex flex-col justify-center space-y-6">
+    <div className="min-h-screen p-4 sm:p-6 md:p-10 max-w-5xl mx-auto flex flex-col justify-center space-y-5 sm:space-y-6">
       {/* Suspended Notice Banner (Server-Enforced Entitlement) */}
       {isSuspended && (
         <div className="p-4 rounded-xl bg-red-50 border-2 border-red-400 text-red-950 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-md animate-in slide-in-from-top">
