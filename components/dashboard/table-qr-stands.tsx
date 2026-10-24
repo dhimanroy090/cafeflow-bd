@@ -146,11 +146,15 @@ function TableCard({ table, origin }: QRStandItemProps) {
 }
 
 export function TableQRStandsScreen() {
-  const [origin, setOrigin] = useState<string>("http://localhost:3000");
+  const [origin, setOrigin] = useState<string>("http://192.168.0.190:3000");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setOrigin(window.location.origin);
+      if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+        setOrigin("http://192.168.0.190:3000");
+      } else {
+        setOrigin(window.location.origin);
+      }
     }
   }, []);
 
@@ -176,7 +180,7 @@ export function TableQRStandsScreen() {
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-brand-forest flex items-center gap-2">
             <QrCode className="w-7 h-7 text-brand-terracotta" />
-            Table QR Codes & Stands
+            Table QR Codes &amp; Stands
           </h1>
           <p className="text-xs sm:text-sm text-brand-charcoal/80">
             Generate, test, download, and print table tent cards for your dine-in tables.
@@ -190,6 +194,34 @@ export function TableQRStandsScreen() {
           >
             <Printer className="w-4 h-4" />
             Print All Table Stands
+          </Button>
+        </div>
+      </div>
+
+      {/* Domain / Access URL Control Bar for Mobile Scanning */}
+      <div className="p-4 rounded-xl bg-card border border-border/80 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 shadow-sm print:hidden">
+        <div className="space-y-0.5">
+          <p className="text-xs font-bold text-brand-forest">QR Target Address (For Phone Scanning)</p>
+          <p className="text-[11px] text-muted-foreground">
+            Current IP: <code className="font-bold text-brand-forest">{origin}</code>. When scanning with your phone, make sure your phone and laptop are on the same Wi-Fi.
+          </p>
+        </div>
+        <div className="flex items-center gap-2 w-full md:w-auto">
+          <input
+            type="text"
+            value={origin}
+            onChange={(e) => setOrigin(e.target.value)}
+            className="h-9 px-3 rounded-lg border border-border bg-background text-xs font-mono w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-brand-forest"
+            placeholder="http://192.168.0.190:3000"
+          />
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => setOrigin("http://192.168.0.190:3000")}
+            className="text-xs h-9 shrink-0 border-border hover:bg-secondary font-semibold"
+          >
+            Reset Wi-Fi IP
           </Button>
         </div>
       </div>

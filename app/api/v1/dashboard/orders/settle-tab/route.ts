@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
 import { createAdminClient } from "@/lib/supabase/server";
-import { memoryDashboardOrders } from "../route";
+import { memoryDashboardOrders } from "@/lib/orders/memory-store";
 import type { PaymentMethod } from "@/lib/supabase/database.types";
 
 export const dynamic = "force-dynamic";
